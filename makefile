@@ -7,7 +7,7 @@ MAKEFLAGS += --no-builtin-rules
 .PHONY: build
 build: dist/index.js
 
-dist/index.js: $(shell find src -iname "*.ts" -not -iname "*.test.ts")
+dist/index.js: $(shell ./build/cas.sh $(shell find src -iname "*.ts" -not -iname "*.test.ts"))
 	@echo "==> Building"
 	@sleep 3s
 	@mkdir -p "dist"
@@ -18,7 +18,7 @@ dist/index.js: $(shell find src -iname "*.ts" -not -iname "*.test.ts")
 .PHONY: test
 test: artifacts/test-report.json
 
-artifacts/test-report.json: $(shell find src -iname "*.ts")
+artifacts/test-report.json: $(shell ./build/cas.sh $(shell find src -iname "*.ts"))
 	@echo "==> Running Tests"
 	@sleep 1s
 	@mkdir -p artifacts/
