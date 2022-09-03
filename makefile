@@ -14,6 +14,8 @@ dist/index.js: $(shell ./build/cas.sh $(shell find src -iname "*.ts" -not -iname
 	@echo "compiled at $(shell date)" > "$@"
 	@echo "==> Done"
 
+	@./build/artifact.sh "$<" "$@"
+
 
 .PHONY: test
 test: artifacts/test-report.json
@@ -23,4 +25,8 @@ artifacts/test-report.json: $(shell ./build/cas.sh $(shell find src -iname "*.ts
 	@sleep 1s
 	@mkdir -p artifacts/
 	@echo '{"tests": 10, "lastRun": "$(shell date)"}' > "$@"
+	@echo '{}' > "artifacts/coverage.json"
 	@echo "==> Passed"
+
+	@./build/artifact.sh "$<" "$@"
+	@./build/artifact.sh "$<" "artifacts/coverage.json"
