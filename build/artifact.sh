@@ -8,3 +8,9 @@ if [ -n "$CAS_VERBOSE" ]; then
 fi
 
 echo "artifact: ${artifact}" >> "${key}"
+
+if [ -f "${CAS_REMOTE}" ]; then
+  hash="$(basename "${key}")"
+  ${CAS_REMOTE} store-artifact "${hash}" "${artifact}"
+  ${CAS_REMOTE} store-state "${hash}" "${key}"
+fi
