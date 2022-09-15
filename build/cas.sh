@@ -32,7 +32,7 @@ else
   # this is a new hash
   echo "date: $now" > "${state_path}"
 
-  if [ -f "${CAS_REMOTE}" ]; then
+  if [ -f "${CAS_REMOTE}" ] && [ "$CAS_READ_ONLY" = "0" ] ; then
     ${CAS_REMOTE} store-state "${key}" "${state_path}"
   fi
 fi
